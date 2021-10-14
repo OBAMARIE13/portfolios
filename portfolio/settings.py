@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'christelle.apps.ChristelleConfig',
     'tinymce',
+    'christelle.apps.ChristelleConfig',
 ]
 
 MIDDLEWARE = [

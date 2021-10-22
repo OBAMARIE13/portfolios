@@ -94,7 +94,7 @@ class Experience(models.Model):
 
 class Portfolios(models.Model):
     nom = models.CharField(max_length=200)
-    lien = models.TextField()
+    lien = models.URLField(max_length = 200)
     photo = models.FileField(upload_to="portfolios")
     categorie = models.ForeignKey('christelle.Categorie', related_name='categorie_portfolios', on_delete=models.CASCADE)
     date_add = models.DateTimeField(auto_now_add=True)

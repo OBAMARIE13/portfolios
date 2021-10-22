@@ -283,7 +283,9 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item {{image.categorie.id}} wow fadeInUp" data-wow-delay="0.0s">
                             <div class="portfolio-wrap">
                                 <div class="portfolio-img">
-                                    <img src="{{image.photo.url}}" alt="Image" href="{{image.lien}}">
+                                <a href="{{image.lien}}">
+                                    <img src="{{image.photo.url}}" alt="Image" >
+                                </a>
                                 </div>
                                 <div class="portfolio-text">
                                     <h3>{{image.nom}}</h3>

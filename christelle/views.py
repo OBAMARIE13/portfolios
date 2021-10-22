@@ -10,4 +10,6 @@ def index(request):
     abouts = models.About.objects.filter(status=True).first()
     fonction = models.Fonction.objects.filter(status=True)
     experiences = models.Experience.objects.filter(status=True)
+    portfolio = models.Portfolios.objects.filter(status=True)
+    categorie = models.Categorie.objects.filter(status=True) 
     return render(request, "index.html", locals())

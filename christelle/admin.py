@@ -47,7 +47,7 @@ class ExperienceAdmin(admin.ModelAdmin):
 
 @admin.register(models.Portfolios)
 class PortfoliosAdmin(admin.ModelAdmin):
-	list_display = ('nom', 'picture_view', 'categorie', 'date_add', 'date_update', 'status')
+	list_display = ('nom', 'lien', 'picture_view', 'categorie', 'date_add', 'date_update', 'status')
 	
 
 	def picture_view(self, obj):
@@ -62,7 +62,7 @@ class CategorieAdmin(admin.ModelAdmin):
 
 @admin.register(models.Contact)
 class ContactAdmin(admin.ModelAdmin):
-	list_display = ('nom', 'email', 'message', 'sujet', 'date_add', 'date_update', 'status')
+	list_display = ('name', 'email', 'message', 'sujet', 'date_add', 'date_update', 'status')
 
 
 @admin.register(models.Sociaux)

@@ -270,8 +270,8 @@
                         <ul id="portfolio-filter">
                             <li data-filter="*" class="filter-active">All</li>
                             {% comment %} a = [".filter-1", ".filter-2", ".filter-3"] {% endcomment %}
-                            {% for i in categorie  %}
-                                <li data-filter="{{i.id}}">{{i.nom}}</li>
+                            {% for categorie in categories  %}
+                                <li data-filter=".{{categorie.id}}">{{categorie.nom}}</li>
                                 {% comment %} <li data-filter=".filter-2">{{categorie.nom}}</li>
                                 <li data-filter=".filter-3">{{categorie.nom}}</li>  {% endcomment %}
                             {% endfor %}
@@ -280,10 +280,10 @@
                 </div>
                 <div class="row portfolio-container">
                     {% for image in portfolio %}
-                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-1 wow fadeInUp" data-wow-delay="0.0s">
+                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item {{image.categorie.id}} wow fadeInUp" data-wow-delay="0.0s">
                             <div class="portfolio-wrap">
                                 <div class="portfolio-img">
-                                    <img src="{{image.photo.url}}" alt="Image">
+                                    <img src="{{image.photo.url}}" alt="Image" href="{{image.lien}}">
                                 </div>
                                 <div class="portfolio-text">
                                     <h3>{{image.nom}}</h3>
@@ -291,7 +291,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-2 wow fadeInUp" data-wow-delay="0.2s">
+                        {% comment %} <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-2 wow fadeInUp" data-wow-delay="0.2s"> {% endcomment %}
                             {% comment %} <div class="portfolio-wrap">
                                 <div class="portfolio-img">
                                     <img src="{% static 'img/portfolio-2.jpg' %}" alt="Image">
@@ -301,8 +301,8 @@
                                     <a class="btn" href="{% static 'img/portfolio-2.jpg' %}" data-lightbox="portfolio">+</a>
                                 </div>
                             </div> {% endcomment %}
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-3 wow fadeInUp" data-wow-delay="0.4s">
+                        {% comment %} </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-3 wow fadeInUp" data-wow-delay="0.4s"> {% endcomment %}
                             {% comment %} <div class="portfolio-wrap">
                                 <div class="portfolio-img">
                                     <img src="{% static 'img/portfolio-3.jpg' %}" alt="Image">
@@ -312,8 +312,8 @@
                                     <a class="btn" href="{% static 'img/portfolio-3.jpg' %}" data-lightbox="portfolio">+</a>
                                 </div>
                             </div> {% endcomment %}
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-1 wow fadeInUp" data-wow-delay="0.6s">
+                        {% comment %} </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-1 wow fadeInUp" data-wow-delay="0.6s"> {% endcomment %}
                             {% comment %} <div class="portfolio-wrap">
                                 <div class="portfolio-img">
                                     <img src="{% static 'img/portfolio-4.jpg' %}" alt="Image">
@@ -323,8 +323,8 @@
                                     <a class="btn" href="{% static 'img/portfolio-4.jpg' %}" data-lightbox="portfolio">+</a>
                                 </div>
                             </div> {% endcomment %}
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-2 wow fadeInUp" data-wow-delay="0.8s">
+                        {% comment %} </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-2 wow fadeInUp" data-wow-delay="0.8s"> {% endcomment %}
                             {% comment %} <div class="portfolio-wrap">
                                 <div class="portfolio-img">
                                     <img src="{% static 'img/portfolio-5.jpg' %}" alt="Image">
@@ -334,8 +334,8 @@
                                     <a class="btn" href="{% static 'img/portfolio-5.jpg' %}" data-lightbox="portfolio">+</a>
                                 </div>
                             </div> {% endcomment %}
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-3 wow fadeInUp" data-wow-delay="1s">
+                        {% comment %} </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-3 wow fadeInUp" data-wow-delay="1s"> {% endcomment %}
                             {% comment %} <div class="portfolio-wrap">
                                 <div class="portfolio-img">
                                     <img src="{% static 'img/portfolio-6.jpg' %}" alt="Image">
@@ -345,7 +345,7 @@
                                     <a class="btn" href="{% static 'img/portfolio-6.jpg' %}" data-lightbox="portfolio">+</a>
                                 </div>
                             </div> {% endcomment %}
-                        </div>
+                        {% comment %} </div> {% endcomment %}
                 {% endfor %}
                 </div>
             </div>
@@ -363,25 +363,26 @@
                         <div class="col-md-8">
                             <div class="contact-form">
                                 <div id="success"></div>
-                                <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                                <form name="sentMessage" id="contactForm" novalidate="novalidate" method="post">
+                                {% csrf_token %}
                                     <div class="control-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Nom" required="required" data-validation-required-message="Please enter your name" />
+                                        <input type="text" class="form-control" id="name" placeholder="Nom" required="" data-validation-required-message="Please enter your name"  v-model='name'>
                                         <p class="help-block"></p>
                                     </div>
                                     <div class="control-group">
-                                        <input type="email" class="form-control" id="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email" />
+                                        <input type="email" class="form-control" id="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email" v-model='email'>
                                         <p class="help-block"></p>
                                     </div>
                                     <div class="control-group">
-                                        <input type="text" class="form-control" id="subject" placeholder="Sujet" required="required" data-validation-required-message="Please enter a subject" />
+                                        <input type="text" class="form-control" id="sujet" placeholder="Sujet" required="required" data-validation-required-message="Please enter a subject"  v-model='sujet'>
                                         <p class="help-block"></p>
                                     </div>
                                     <div class="control-group">
-                                        <textarea class="form-control" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
+                                        <textarea class="form-control" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message" v-model='message'></textarea>
                                         <p class="help-block"></p>
                                     </div>
                                     <div>
-                                        <button class="btn" type="submit" id="sendMessageButton">Envoyer Votre Message</button>
+                                        <button class="btn" type="submit" id="sendMessageButton" @click.prevent="postData">Envoyer Votre Message</button>
                                     </div>
                                 </form>
                             </div>
@@ -437,11 +438,91 @@
         <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
         <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
         
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <!-- Contact Javascript File -->
         <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
         <script src="{% static 'mail/contact.js' %}"></script>
 
         <!-- Template Javascript -->
         <script src="{% static 'js/main.js' %}"></script>
+    
+    
+    <script>
+      new Vue(
+        {
+          el:'#contactForm',
+          data:{
+            name:'',
+            email:'',
+            sujet:'',
+            message:'',
+            url:"{% url 'checkup' %}"
+          },
+          methods:{
+            postData(){
+              if (this.name === '' || this.email === '' || this.message === '' || this.sujet === '' ){
+                swal.fire({
+                  icon:'error',
+                  text:'Veuillez remplir les champs vides',
+                  showConfirmButton:false,
+                  timer:2000,
+                })
+              }
+              
+              else if (!/(\w\.?)+@(\w\.?)+\.[A-Za-z]{2,3}/.test(this.email)){
+                swal.fire({
+                  icon:'error',
+                  text:'Veuillez saisir un email valide',
+                  showConfirmButton:false,
+                  timer:2000,
+                })
+              }
+              else{
+                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                axios.defaults.xsrfCookieName = 'csrftoken'
+                
+                let form = new FormData()
+
+                form.append('name', this.name)
+                form.append('email', this.email)
+                form.append('sujet', this.sujet)
+                form.append('message', this.message)
+                
+                axios.post(this.url, form).then((response) => {
+                  if (response.data.success){
+                    swal.fire({
+                      icon:'success',
+                      text:response.data.text,
+                      showConfirmButton:false,
+                      timer:2000,
+                    }).then(()=>{
+                      window.location.reload()
+                    })
+                  }
+                  else {
+                    swal.fire({
+                      icon:'error',
+                      text:response.data.text,
+                      showConfirmButton:false,
+                      timer:2000,
+                    })
+                  }
+                }).catch((e) => {
+                  console.log(e)
+                })
+                
+              }
+            }
+          },
+          delimiters: ['%{', '}']
+        }
+      )
+    </script>
+
+    
+    
+    
     </body>
 </html>

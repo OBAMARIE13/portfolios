@@ -94,6 +94,7 @@ class Experience(models.Model):
 
 class Portfolios(models.Model):
     nom = models.CharField(max_length=200)
+    lien = models.TextField()
     photo = models.FileField(upload_to="portfolios")
     categorie = models.ForeignKey('christelle.Categorie', related_name='categorie_portfolios', on_delete=models.CASCADE)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -125,7 +126,7 @@ class Categorie(models.Model):
 
 
 class Contact(models.Model):
-    nom = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     email = models.EmailField()
     message = models.CharField(max_length=255)
     sujet = models.CharField(max_length=50)
@@ -138,7 +139,7 @@ class Contact(models.Model):
         verbose_name_plural = 'Contacts'
 
     def __str__(self):
-        return self.nom
+        return self.name
 
 
 class Sociaux(models.Model):
